@@ -7,12 +7,20 @@ const LoginForm = () => {
     register,
     handleSubmit,
     formState: { errors },
+    setError,
   } = useForm();
 
   const submitForm = (formData) => {
     console.log(formData);
     const user = { email: "a@a.com", password: "@A1a1111" };
     const found = formData.email === user.email && formData.password === user.password;
+
+    if (!found) {
+      setError("root.random", {
+        message: `User with email ${formData.email} not found`,
+        type: "random",
+      });
+    }
   };
 
   return (
@@ -54,8 +62,9 @@ const LoginForm = () => {
               })}
             />
           </Field>
+          <div className='my-2 text-red-600'>{errors?.root?.random?.message}</div>
           <Field>
-            <button className='p-1 mx-auto text-white bg-purple-500 border rounded-lg cursor-pointer text-md '>
+            <button className='p-1 px-3 mx-auto text-white bg-purple-500 border rounded-lg cursor-pointer text-md'>
               Login
             </button>
           </Field>
