@@ -1,9 +1,11 @@
-function App() {
+import LoginForm from './components/forms/LoginForm'
+
+function App () {
   return (
     <>
-      <p>Hello</p>
+      <LoginForm />
     </>
-  );
+  )
 }
 
-export default App;
+export default App
