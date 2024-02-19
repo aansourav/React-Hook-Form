@@ -11,10 +11,12 @@ const LoginForm = () => {
 
   const submitForm = (formData) => {
     console.log(formData);
+    const user = { email: "a@a.com", password: "@A1a1111" };
+    const found = formData.email === user.email && formData.password === user.password;
   };
 
   return (
-    <div className='flex flex-col justify-center items-center'>
+    <div className='flex flex-col items-center justify-center'>
       <form onSubmit={handleSubmit(submitForm)}>
         <FieldSet label='Enter login details'>
           <Field label='Email' error={errors.email}>
@@ -53,7 +55,7 @@ const LoginForm = () => {
             />
           </Field>
           <Field>
-            <button className='text-md text-white cursor-pointer p-1 border rounded-lg bg-purple-500 mx-auto '>
+            <button className='p-1 mx-auto text-white bg-purple-500 border rounded-lg cursor-pointer text-md '>
               Login
             </button>
           </Field>
