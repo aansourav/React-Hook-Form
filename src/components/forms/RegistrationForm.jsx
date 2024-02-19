@@ -1,6 +1,7 @@
-import { useFieldArray, useForm } from "react-hook-form";
+import { Controller, useFieldArray, useForm } from "react-hook-form";
 import Field from "../Field";
 import FieldSet from "../FieldSet";
+import NumberInput from "../NumberInput";
 
 const RegistrationForm = () => {
   const {
@@ -37,22 +38,31 @@ const RegistrationForm = () => {
             />
           </Field>
 
+          {/* How to add an external component under React-Hook Form's control */}
+
           <Field label='Age' error={errors.age}>
-            <input
-              className={`p-2 border box-border w-[300px] rounded-sm ${
-                errors.age ? "border-red-300" : "border-gray-200"
-              } focus:outline-none`}
-              type='number'
+            <Controller
               name='age'
-              id='age'
-              placeholder='Enter age'
-              {...register("age", {
+              control={control}
+              // render takes the external component
+              render={({ field: { ref, ...field } }) => (
+                <NumberInput
+                  id='age'
+                  className={`p-2 border box-border w-full rounded-md ${
+                    errors.age ? "border-red-500" : "border-gray-200"
+                  }`}
+                  {...field}
+                />
+              )}
+              rules={{
                 required: "Age is required",
                 min: { value: 18, message: "Age must be at least 18" },
                 max: { value: 70, message: "Age must be at most 70" },
-              })}
-            />
+              }}
+            ></Controller>
           </Field>
+
+          {/* External component end */}
 
           <Field label='Email' error={errors.email}>
             <input
@@ -122,7 +132,7 @@ const RegistrationForm = () => {
             })}
 
             <button
-              className='mt-4 text-md text-white cursor-pointer border rounded-lg bg-gray-500 p-1 m-auto'
+              className='mt-2 px-3 text-md text-white cursor-pointer border rounded-lg bg-gray-500 p-1 m-auto'
               onClick={() =>
                 append({
                   name: "",
